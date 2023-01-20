@@ -10,12 +10,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = PostCreator.call(post_params)
+    result = PostCreator.call(post_params)
 
-    if Post.exists?(id: @post.id)
-      render json: { post: @post }, status: :created
+    if result.created?
+      render json: { post: result.post }, status: :created
     else
-      render json: { errors: @post.errors }, status: :unprocessable_entity
+      render json: { errors: result.post.errors }, status: :unprocessable_entity
     end
   end
 

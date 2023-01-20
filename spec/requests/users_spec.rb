@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  describe 'GET /users' do
+  describe 'GET /api/v1/users' do
     it 'lists all users' do
       create_list(:user, 10)
-      get '/users'
+      get '/api/v1/users'
 
       parsed_body = JSON.parse(response.body)
 
@@ -15,11 +15,11 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /users/:id' do
+  describe 'GET /api/v1/users/:id' do
     let!(:user) { create(:user) }
 
     it 'lists specified user' do
-      get "/users/#{user.id}"
+      get "/api/v1/users/#{user.id}"
 
       parsed_body = JSON.parse(response.body)
 

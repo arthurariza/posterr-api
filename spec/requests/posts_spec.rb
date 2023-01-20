@@ -4,11 +4,11 @@ require 'rails_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe 'Posts', type: :request do
-  describe 'GET /posts' do
+  describe 'GET /api/v1/posts' do
     let!(:posts) { create_list(:post, 25) }
 
     it 'shows only 10 posts by default' do
-      get '/posts'
+      get '/api/v1/posts'
 
       parsed_body = JSON.parse(response.body)
 
@@ -19,7 +19,7 @@ RSpec.describe 'Posts', type: :request do
     it 'shows a specified amount posts' do
       limit = rand(10)
 
-      get "/posts?limit=#{limit}"
+      get "/api/v1/posts?limit=#{limit}"
 
       parsed_body = JSON.parse(response.body)
 
@@ -28,11 +28,11 @@ RSpec.describe 'Posts', type: :request do
     end
   end
 
-  describe 'GET /posts/:id' do
+  describe 'GET /api/v1/posts/:id' do
     let!(:post) { create(:post) }
 
     it 'returns a specified post' do
-      get "/posts/#{post.id}"
+      get "/api/v1/posts/#{post.id}"
 
       parsed_body = JSON.parse(response.body)
 
@@ -44,10 +44,10 @@ RSpec.describe 'Posts', type: :request do
     end
   end
 
-  describe 'POST /posts' do
+  describe 'POST /api/v1/posts' do
     let(:user) { create(:user) }
     it 'returns the created post' do
-      post '/posts', params: { post: { body: 'My Post', user_id: user.id } }
+      post '/api/v1/posts', params: { post: { body: 'My Post', user_id: user.id } }
 
       parsed_body = JSON.parse(response.body)
 

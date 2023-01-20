@@ -2,12 +2,12 @@
 
 class RepostPostController < ApplicationController
   def create
-    @post = RepostPostCreator.call(post_params)
+    result = RepostPostCreator.call(post_params)
 
-    if Post.exists?(id: @post.id)
-      render json: { post: @post }, status: :created
+    if result.created?
+      render json: { post: result.post }, status: :created
     else
-      render json: { errors: @post.errors }, status: :unprocessable_entity
+      render json: { errors: result.post.errors }, status: :unprocessable_entity
     end
   end
 
